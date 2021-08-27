@@ -1,83 +1,61 @@
-from honda import unlock, lock, trunk, dome, horn, acc, ign, start, kill
+import honda
+from finger_module import finger_menu
 from thermometer import read_temp
 
 while True:
     print("----------------")
     print("2001 Honda Accord LX:")
-    print("(u) Unlock")
-    print("(l) Lock")
-    print("(t) Trunk Release")
-    print("(d) Dome Light")
-    print("(h) Horn")
-    print("(a) Accessory (I)")
-    print("(i) Ignition (II)")
-    print("(s) Start (III)")
-    print("(f) Temperature")
-    print("(o) Off")
-    print("(x) Exit" )
+    print("(u) UNLK")
+    print("(l) LOCK")
+    print("(t) TRUNK")
+    print("(d) DOME")
+    print("(h) HORN")
+    print("(a) ACC")
+    print("(i) IGN")
+    print("(s) START")
+    print("(c) TEMP")
+    print("(f) FINGER")
+    print("(g) GPIO")
+    print("(o) OFF")
+    print("(x) EXIT" )
     print("----------------")
-    kb = input('Enter command: ')
+    key = input('Enter command: ')
 
-# Lock/Unlock
-    if kb == "u":
-        unlock()
-    if kb == 'unlock':
-        unlock()
-    if kb == 'l':
-        lock()
-    if kb == 'lock':
-        lock()
+    if key == 'u' or key == 'unlock' or key == 'U' or key == 'UNLK' or key == 'UNLOCK':
+        honda.unlock()
 
-# Trunk Release
-    if kb == 't':
-        trunk()
-    if kb == 'trunk':
-        trunk()
+    if key == 'l' or key == 'lock' or key == 'L' or key == 'LOCK':
+        honda.lock()
 
-# Dome Light (On/Off)
-    if kb == 'd':
-        dome()
-    if kb == 'dome':
-        dome()
+    if key == 't' or key == 'trunk' or key == 'T' or key == 'TRUNK':
+        honda.trunk()
 
-# Horn
-    if kb == 'h':
-        horn()
-    if kb == 'horn':
-        horn()
+    if key == 'd' or key == 'dome' or key == 'D' or key == 'DOME':
+        honda.dome()
 
-# Accessory (On/Off)
-    if kb == 'a':
-        acc()
-    if kb == 'acc':
-        acc()
+    if key == 'h' or key == 'horn' or key == 'H' or key == 'HORN':
+        honda.horn()
 
-# Ignition (On/Off)
-    if kb == 'i':
-        ign()
-    if kb == 'ign':
-        ign()
+    if key == 'a' or key == 'acc' or key == 'A' or key == 'ACC':
+        honda.acc()
 
-##### START #####
-    if kb == 's':
-        start()
-    if kb == 'start':
-        start()
+    if key == 'i' or key == 'ign' or key == 'I' or key == 'IGN':
+        honda.ign()
 
-##### TEMP #####
-    if kb == 'f':
-        read_temp()
-    if kb == 'temp':
+    if key == 's' or key == 'start' or key == 'S' or key == 'START':
+        honda.start()
+
+    if key == 'temp' or key == 'TEMP' or key == 'c' or key == 'C':
         read_temp()
 
-##### OFF #####
-    if kb == 'o':
-        kill()
-    if kb == 'off':
-        kill()
+    if key == 'f' or key == 'enroll' or key == 'F' or key == 'ENROLL' or key == 'finger' or key == 'FINGER':
+        finger_menu()
 
-##### EXIT #####
-    if kb == 'x':
-        exit()
-    if kb == 'exit':
+    if key == 'g' or key == 'G' or key == 'GPIO' or key == 'gpio':
+        honda.full_check()
+
+    if key == 'o' or key == 'off' or key == 'O' or key == 'OFF':
+        honda.kill()
+
+    if key == 'x' or key == 'exit' or key == 'X' or key == 'EXIT':
         exit()
