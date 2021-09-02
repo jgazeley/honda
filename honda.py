@@ -11,14 +11,16 @@ DOME = 20
 ACC = 23
 IGN = 27
 BUTTON = 5
+STARTER = 25
 
-# Index  0      1     2      3      4       5      6    7    8      9
-gpio = [UNLK, LOCK, TRUNK, HORN, PLIGHTS, START, DOME, ACC, IGN, BUTTON]
+# Index  0      1     2      3      4       5      6    7    8      9       10
+gpio = [UNLK, LOCK, TRUNK, HORN, PLIGHTS, START, DOME, ACC, IGN, BUTTON, STARTER]
+gpio_name = ["UNLK", "LOCK", "TRUNK", "HORN", "PLIGHTS", "START", "DOME", "ACC", "IGN", "BUTTON", "STARTER"]
 
 io.setwarnings(False)
 io.setmode(io.BCM)
 
-for x in range(0, 10): # Set BUTTON as an input, all other channels as outputs
+for x in range(0, 11): # Set BUTTON and STARTER as inputs, all other channels as outputs
   if x < 9:
     io.setup(gpio[x], io.OUT)
     if x < 6:
@@ -28,6 +30,20 @@ for x in range(0, 10): # Set BUTTON as an input, all other channels as outputs
   else:
     io.setup(gpio[x], io.IN, io.PUD_UP)
 
+def check(pin):
+  result = io.input(pin)
+  return result
+
+def full_check():
+  for x in range(0, 11):
+    print(str(gpio_name[x] + " (GPIO " + str(gpio[x]) + ") = " + str(io.input(gpio[x]))))
+
+dome_on = not check(DOME)
+dome_off = check(DOME)
+acc_on = not check(ACC)
+acc_off = check(ACC)
+ign_on = not check(IGN)
+ign_off = check(IGN)
 
 def activate(pin):
   io.output(pin, 0)
@@ -36,14 +52,6 @@ def activate(pin):
 
 def toggle(pin):
   io.output(pin, not io.input(pin))
-
-def check(pin):
-  result = io.input(pin)
-  return result
-
-def full_check():
-  for x in gpio:
-    print("(GPIO " + str(x) + ") = " + str(io.input(x)))
 
 def lock():
   activate(LOCK)
@@ -85,23 +93,23 @@ def horn():
 
 def dome():
   toggle(DOME)
-  if not check(DOME):
+  if dome_on:
     print("Dome Light On.")
-  if check(DOME):
+  if dome_off:
     print("Dome Light Off.")
 
 def acc():
   toggle(ACC)
-  if not check(ACC):
+  if acc_on:
     print("Accessory On.")
-  if check(ACC):
+  if acc_off:
     print("Accessory Off.")
 
 def ign():
   toggle(IGN)
-  if not check(IGN):
+  if ign_on:
     print("Ignition On.")
-  if check(IGN):
+  if ign_off:
     print("Ignition Off.")
 
 def car_on():
@@ -114,7 +122,7 @@ def start():
   io.output(ACC, 1)
   time.sleep(1)
   io.output(START, 0)
-  time.sleep(.8)
+  time.sleep(.7)
   io.output(START, 1)
   time.sleep(.3)
   io.output(ACC, 0)
