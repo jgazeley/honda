@@ -38,13 +38,6 @@ def full_check():
   for x in range(0, 11):
     print(str(gpio_name[x] + " (GPIO " + str(gpio[x]) + ") = " + str(io.input(gpio[x]))))
 
-dome_on = not check(DOME)
-dome_off = check(DOME)
-acc_on = not check(ACC)
-acc_off = check(ACC)
-ign_on = not check(IGN)
-ign_off = check(IGN)
-
 def activate(pin):
   io.output(pin, 0)
   time.sleep(.1)
@@ -93,23 +86,26 @@ def horn():
 
 def dome():
   toggle(DOME)
+  dome_on = not check(DOME)
   if dome_on:
     print("Dome Light On.")
-  if dome_off:
+  else:
     print("Dome Light Off.")
 
 def acc():
   toggle(ACC)
+  acc_on = not check(ACC)
   if acc_on:
     print("Accessory On.")
-  if acc_off:
+  else:
     print("Accessory Off.")
 
 def ign():
   toggle(IGN)
+  ign_on = not check(IGN)
   if ign_on:
     print("Ignition On.")
-  if ign_off:
+  else:
     print("Ignition Off.")
 
 def car_on():
